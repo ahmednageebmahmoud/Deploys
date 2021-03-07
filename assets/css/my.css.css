@@ -232,3 +232,8 @@ td i.far {
 .cursor-pointer{
     cursor: pointer;
 }
+
+.link{
+    color: #007bff  !important;
+    text-decoration: underline !important;;
+}

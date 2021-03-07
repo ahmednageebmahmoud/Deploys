@@ -39,11 +39,20 @@ var App = function () {
         }
     }
 
+    let closeSidBar = () => {
+        $('html, body').addClass('sidebar-noneoverflow');
+        $("#container").addClass("sidebar-closed");
+        $(".navbar").addClass("expand-header");
+        $('.overlay').addClass('show');
+        $('#container').addClass('sbar-open');
+        $('.sidebar-wrapper [aria-expanded="true"]').parents('li.menu').find('.collapse').removeClass('show');
+    }
+
     let toggleFunction = {
+
 
         sidebar: function ($recentSubmenu) {
             $('.sidebarCollapse').on('click', function (sidebar) {
-            
 
                 sidebar.preventDefault();
                 getSidebar = $('.sidebar-wrapper');
@@ -179,8 +188,9 @@ var App = function () {
             let windowWidth = window.innerWidth;
             if (windowWidth > MediaSize.md) {
                 categoryScrollApp.scrollCat();
-                toggleFunction.sidebar(true);
+                toggleFunction.sidebar(false);
                 toggleFunction.onToggleSidebarSubmenu();
+
             }
         },
 
@@ -197,12 +207,9 @@ var App = function () {
     }
 
     function sidebarFunctionality() {
-        
+
         function sidebarCloser() {
-
             if (window.innerWidth <= 991) {
-
-
                 if (!$('body').hasClass('alt-menu')) {
 
                     $("#container").addClass("sidebar-closed");
@@ -215,7 +222,9 @@ var App = function () {
                 }
 
             } else if (window.innerWidth > 991) {
-
+                //نود اغلاق المنيو على اى حال
+                closeSidBar();
+                return;
                 if (!$('body').hasClass('alt-menu')) {
 
                     $("#container").removeClass("sidebar-closed");
@@ -225,17 +234,15 @@ var App = function () {
                     $('html, body').removeClass('sidebar-noneoverflow');
                     // $('.sidebar-wrapper [aria-expanded="true"]').parents('li.menu').find('.collapse').removeClass('show');
                 } else {
-                    $('html, body').addClass('sidebar-noneoverflow');
-                    $("#container").addClass("sidebar-closed");
-                    $(".navbar").addClass("expand-header");
-                    $('.overlay').addClass('show');
-                    $('#container').addClass('sbar-open');
-                    $('.sidebar-wrapper [aria-expanded="true"]').parents('li.menu').find('.collapse').removeClass('show');
+                    closeSidBar();
                 }
             }
-
         }
 
+
+
+
+        /**
         function sidebarMobCheck() {
             if (window.innerWidth <= 991) {
 
@@ -249,11 +256,12 @@ var App = function () {
             }
         }
 
+         * ايقا فتح المنيو حين التغير فى حجم الشاشة
+         $(window).resize(function (event) {
+             sidebarMobCheck();
+            });
+            */
         sidebarCloser();
-
-        $(window).resize(function (event) {
-            sidebarMobCheck();
-        });
 
     }
 
@@ -261,6 +269,7 @@ var App = function () {
         initSideBar: () => {
             inBuiltfunctionality.mainCatActivateScroll();
             categoryScrollApp.scrollCat();
+            closeSidBar()
 
         },
         init: function () {
@@ -284,6 +293,8 @@ var App = function () {
             */
             inBuiltfunctionality.mainCatActivateScroll();
             inBuiltfunctionality.preventScrollBody();
+            closeSidBar()
+
         }
     }
 
